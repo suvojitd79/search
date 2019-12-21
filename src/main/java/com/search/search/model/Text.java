@@ -2,7 +2,10 @@ package com.search.search.model;
 
 public class Text {
 
-    private final String text, label;
+    private String text, label;
+
+    public Text() {
+    }
 
     public Text(String text, String label) {
         this.text = text;
@@ -15,5 +18,13 @@ public class Text {
 
     public String getLabel() {
         return label;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }

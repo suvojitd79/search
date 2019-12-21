@@ -15,20 +15,24 @@ import java.util.Set;
 @RequestMapping(path="/api/add")
 public class AddController {
 
-    private Map<String, Set<String>> dbRef = SearchApplication.db;
+    private Map<String, Text> dbRef = SearchApplication.db;
+    private Map<String, Set<String>> indexRef = SearchApplication.invertedIndex;
 
     @PostMapping(path = "/text")
-    public void addText(@RequestBody Text text){
+    public Text addText(@RequestBody Text text){
 
-          String[] words = text.getText().split("\\W+");
+          String[] words = text.getText().toLowerCase().trim().split("\\W+");
+
+          dbRef.put(text.getLabel().toLowerCase().trim(), text);
+
           for (String word: words){
 
-              if (!dbRef.containsKey(word))
-                  dbRef.put(word, new HashSet<>());
+              if (!indexRef.containsKey(word))
+                  indexRef.put(word, new HashSet<>());
 
-              dbRef.get(word).add(text.getLabel());
+              indexRef.get(word).add(text.getLabel());
           }
-
+          return text;
     }
 
 }
